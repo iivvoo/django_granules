@@ -39,9 +39,10 @@ class GranuleBlockNode(template.Node):
 
     def render(self, context):
         output = self.nodelist.render(context)
-        if self.granulename not in context.render_context:
-            context.render_context[self.granulename] = []
-        context.render_context[self.granulename].append(output)
+        try:
+            context.render_context[self.granulename].append(output)
+        except KeyError:
+            context.render_context[self.granulename] = [output]
 
         return ''
 
